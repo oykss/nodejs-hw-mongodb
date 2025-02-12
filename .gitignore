@@ -1,5 +1,7 @@
+# env
 .env
 
+# Prettierrc
 .prettierrc.json
 
 # Logs
