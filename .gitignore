@@ -1,8 +1,8 @@
-# env
-.env
-
 # Prettierrc
 .prettierrc.json
+
+# Ignore VS Code settings
+.vscode/
 
 # Logs
 logs
