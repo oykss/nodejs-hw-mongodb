@@ -1,6 +1,6 @@
-import express from "express";
+import express from 'express';
 
 export const jsonParser = express.json({
-  type: ["application/json"],
-  limit: "10kb",
+  type: ['application/json'],
+  limit: '10kb',
 });
