@@ -11,7 +11,6 @@ const PORT = +getEnvVar("PORT", 3000);
 export const setupServer = () => {
   const app = express();
 
-  app.use(express.json({ type: ["application/json"], limit: "10kb" }));
   app.use(cors());
 
   app.use(
@@ -22,7 +21,7 @@ export const setupServer = () => {
     })
   );
 
-  app.use(contactsRouter);
+  app.use("/contacts", contactsRouter);
 
   app.use("*", notFoundHandler);
 
