@@ -48,12 +48,8 @@ export const updateContactSchema = Joi.object({
   isFavourite: Joi.boolean().messages({
     'boolean.base': 'Favourite status should be true or false',
   }),
-  contactType: Joi.string()
-    .valid('work', 'personal', 'home')
-    .required()
-    .messages({
-      'string.base': 'Contact type should be a string',
-      'any.only': 'Contact type should be one of: work, personal, home',
-      'any.required': 'Contact type is required',
-    }),
+  contactType: Joi.string().valid('work', 'personal', 'home').messages({
+    'string.base': 'Contact type should be a string',
+    'any.only': 'Contact type should be one of: work, personal, home',
+  }),
 });
