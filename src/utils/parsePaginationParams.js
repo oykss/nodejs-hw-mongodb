@@ -1,7 +1,7 @@
 const parseNumber = (number, defaultValue) => {
   if (typeof number !== 'string') return defaultValue;
 
-  const parsedNumber = +number;
+  const parsedNumber = parseNumber(number);
 
   if (Number.isNaN(parsedNumber)) return defaultValue;
 
