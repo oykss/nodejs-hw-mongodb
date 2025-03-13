@@ -14,14 +14,12 @@ export const getAllContacts = async ({
 
   const contactsQuery = ContactsCollection.find();
 
+  const contactsCount = await ContactsCollection.countDocuments(contactsQuery);
+
   if (filter.type) contactsQuery.where('contactType').eq(filter.type);
 
   if (filter.isFavourite)
     contactsQuery.where('isFavourite').eq(filter.isFavourite);
-
-  const contactsCount = await ContactsCollection.find()
-    .merge(contactsQuery)
-    .countDocuments();
 
   const contacts = await contactsQuery
     .skip(skip)
