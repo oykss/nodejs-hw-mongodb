@@ -1,55 +1,69 @@
 import Joi from 'joi';
+import { isValidObjectId } from 'mongoose';
+import { contactMessages as messages } from './messages.js';
 
 export const createContactSchema = Joi.object({
   name: Joi.string().min(3).max(30).required().messages({
-    'string.base': 'Name should be a string',
-    'string.min': 'Name should have at least {#limit} characters',
-    'string.max': 'Name should have at most {#limit} characters',
-    'any.required': 'Name is required',
+    'string.base': messages.name.base,
+    'string.min': messages.name.min,
+    'string.max': messages.name.max,
+    'any.required': messages.name.required,
   }),
   phoneNumber: Joi.string().min(10).max(15).required().messages({
-    'string.base': 'Phone number should be a string',
-    'string.min': 'Phone number should have at least {#limit} digits',
-    'string.max': 'Phone number should have at most {#limit} digits',
-    'any.required': 'Phone number is required',
+    'string.base': messages.phoneNumber.base,
+    'string.min': messages.phoneNumber.min,
+    'string.max': messages.phoneNumber.max,
+    'any.required': messages.phoneNumber.required,
   }),
   email: Joi.string().min(6).messages({
-    'string.base': 'Email should be a string',
-    'string.min': 'Email should have at least {#limit} characters',
+    'string.base': messages.email.base,
+    'string.min': messages.email.min,
   }),
   isFavourite: Joi.boolean().messages({
-    'boolean.base': 'Favourite status should be true or false',
+    'boolean.base': messages.isFavourite.base,
   }),
   contactType: Joi.string()
     .valid('work', 'personal', 'home')
     .required()
     .messages({
-      'string.base': 'Contact type should be a string',
-      'any.only': 'Contact type should be one of: work, personal, home',
-      'any.required': 'Contact type is required',
+      'string.base': messages.contactType.base,
+      'any.only': messages.contactType.only,
+      'any.required': messages.contactType.required,
     }),
+  userId: Joi.string().custom((value, helper) => {
+    if (value && !isValidObjectId(value)) {
+      return helper.message(messages.userId.invalid);
+    }
+    return true;
+  }),
 });
 
 export const updateContactSchema = Joi.object({
   name: Joi.string().min(3).max(30).messages({
-    'string.base': 'Name should be a string',
-    'string.min': 'Name should have at least {#limit} characters',
-    'string.max': 'Name should have at most {#limit} characters',
+    'string.base': messages.name.base,
+    'string.min': messages.name.min,
+    'string.max': messages.name.max,
   }),
   phoneNumber: Joi.string().min(10).max(15).messages({
-    'string.base': 'Phone number should be a string',
-    'string.min': 'Phone number should have at least {#limit} digits',
-    'string.max': 'Phone number should have at most {#limit} digits',
+    'string.base': messages.phoneNumber.base,
+    'string.min': messages.phoneNumber.min,
+    'string.max': messages.phoneNumber.max,
   }),
   email: Joi.string().min(6).messages({
-    'string.base': 'Email should be a string',
-    'string.min': 'Email should have at least {#limit} characters',
+    'string.base': messages.email.base,
+    'string.min': messages.email.min,
   }),
   isFavourite: Joi.boolean().messages({
-    'boolean.base': 'Favourite status should be true or false',
+    'boolean.base': messages.isFavourite.base,
   }),
   contactType: Joi.string().valid('work', 'personal', 'home').messages({
-    'string.base': 'Contact type should be a string',
-    'any.only': 'Contact type should be one of: work, personal, home',
+    'string.base': messages.contactType.base,
+    'any.only': messages.contactType.only,
+  }),
+  userId: Joi.string().custom((value, helper) => {
+    if (value && !isValidObjectId(value)) {
+      return helper.message(messages.userId.invalid);
+    }
+    return true;
   }),
 });
