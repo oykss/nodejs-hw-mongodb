@@ -6,6 +6,7 @@ import {
   getContactsController,
   updateContactController,
 } from '../controllers/contacts.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { jsonParser } from '../middlewares/jsonParser.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -16,6 +17,8 @@ import {
 } from '../validation/contacts.js';
 
 const router = Router();
+
+router.use(authenticate);
 
 router.get('/', jsonParser, ctrlWrapper(getContactsController));
 

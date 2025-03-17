@@ -3,6 +3,7 @@ import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async ({
+  userId,
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
@@ -12,7 +13,7 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactsCollection.find();
+  const contactsQuery = ContactsCollection.find({ userId });
 
   const contactsCount = await ContactsCollection.countDocuments(contactsQuery);
 
@@ -35,15 +36,20 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async contactId =>
-  await ContactsCollection.findById(contactId);
+export const getContactById = async (userId, contactId) =>
+  await ContactsCollection.findOne({ userId, _id: contactId });
 
 export const createContact = async payload =>
   await ContactsCollection.create(payload);
 
-export const updateContact = async (contactId, payload, options = {}) => {
+export const updateContact = async (
+  userId,
+  contactId,
+  payload,
+  options = {}
+) => {
   const result = await ContactsCollection.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, userId },
     payload,
     {
       new: true,
@@ -51,6 +57,7 @@ export const updateContact = async (contactId, payload, options = {}) => {
       ...options,
     }
   );
+  console.log(userId, contactId, payload);
 
   if (!result || !result.value) return null;
 
