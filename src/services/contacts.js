@@ -57,7 +57,6 @@ export const updateContact = async (
       ...options,
     }
   );
-  console.log(userId, contactId, payload);
 
   if (!result || !result.value) return null;
 
@@ -67,14 +66,8 @@ export const updateContact = async (
   };
 };
 
-export const deleteContact = async (userId, contactId) => {
-  console.log(userId, contactId);
-
-  const aa = await ContactsCollection.findOneAndDelete({
+export const deleteContact = async (userId, contactId) =>
+  await ContactsCollection.findOneAndDelete({
     userId,
     _id: contactId,
   });
-  console.log(aa);
-
-  return aa;
-};
