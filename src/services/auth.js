@@ -5,14 +5,17 @@ import createHttpError from 'http-errors';
 import jwt from 'jsonwebtoken';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+
 import {
   FIFTEEN_MINUTES,
   ONE_DAY,
   SMTP,
   TEMPLATES_DIR,
 } from '../constants/index.js';
+
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
+
 import { getEnvVar } from '../utils/getEnvVar.js';
 import { sendEmail } from '../utils/sendMail.js';
 

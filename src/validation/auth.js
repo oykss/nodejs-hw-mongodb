@@ -1,5 +1,7 @@
 import Joi from 'joi';
+
 import { EMAIL_REGEX } from '../constants/index.js';
+
 import { authMessages as messages } from './messages.js';
 
 export const registerUserSchema = Joi.object({

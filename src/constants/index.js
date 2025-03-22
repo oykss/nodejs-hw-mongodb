@@ -1,4 +1,5 @@
 import path from 'node:path';
+
 import { ContactsCollection } from '../db/models/contacts.js';
 
 // Sorting options

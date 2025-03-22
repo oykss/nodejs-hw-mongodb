@@ -6,6 +6,7 @@ import {
   requestResetToken,
   resetPassword,
 } from '../services/auth.js';
+
 import { setupSession } from '../utils/setupSession.js';
 
 export const registerUserController = async (req, res) => {
