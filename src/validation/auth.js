@@ -39,3 +39,23 @@ export const loginUserSchema = Joi.object({
     'any.required': messages.password.required,
   }),
 });
+
+export const requestResetEmailSchema = Joi.object({
+  email: Joi.string().email().min(6).pattern(EMAIL_REGEX).required().messages({
+    'string.base': messages.email.base,
+    'string.email': messages.email.email,
+    'string.pattern.base': messages.email.pattern,
+    'string.min': messages.email.min,
+    'any.required': messages.email.required,
+  }),
+});
+
+export const resetPasswordSchema = Joi.object({
+  password: Joi.string().min(6).max(30).required().messages({
+    'string.base': messages.password.base,
+    'string.min': messages.password.min,
+    'string.max': messages.password.max,
+    'any.required': messages.password.required,
+  }),
+  token: Joi.string().required(),
+});
