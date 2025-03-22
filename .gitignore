@@ -4,6 +4,10 @@
 # Ignore VS Code settings
 .vscode/
 
+# Images folders
+temp/
+uploads/
+
 # Logs
 logs
 *.log

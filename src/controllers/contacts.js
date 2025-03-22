@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+
 import {
   createContact,
   deleteContact,
@@ -6,6 +7,8 @@ import {
   getContactById,
   updateContact,
 } from '../services/contacts.js';
+
+import { createPhotoUrl } from '../utils/createPhotoUrl.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
@@ -25,7 +28,7 @@ export const getContactsController = async (req, res) => {
     filter,
   });
 
-  res.status(200).json({
+  res.json({
     status: 200,
     message: 'Successfully found contacts!',
     data: contacts,
@@ -40,7 +43,7 @@ export const getContactByIdController = async (req, res) => {
 
   if (!contact) throw createHttpError(404, 'Contact not found');
 
-  res.status(200).json({
+  res.json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
     data: contact,
@@ -49,8 +52,11 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const { _id: userId } = req.user;
+  const photo = req.file;
 
-  const contact = await createContact({ ...req.body, userId });
+  const photoUrl = await createPhotoUrl(photo);
+
+  const contact = await createContact({ ...req.body, userId, photo: photoUrl });
 
   res.status(201).json({
     status: 201,
@@ -62,11 +68,20 @@ export const createContactController = async (req, res) => {
 export const updateContactController = async (req, res) => {
   const { _id: userId } = req.user;
   const { contactId } = req.params;
-  const result = await updateContact(userId, contactId, req.body);
+  const photo = req.file;
+
+  const photoUrl = await createPhotoUrl(photo);
+
+  const result = await updateContact({
+    userId,
+    contactId,
+    payload: req.body,
+    photo: photoUrl,
+  });
 
   if (!result) throw createHttpError(404, 'Contact not found');
 
-  res.status(200).json({
+  res.json({
     status: 200,
     message: 'Successfully patched a contact!',
     data: result.contact,

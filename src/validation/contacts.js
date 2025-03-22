@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { isValidObjectId } from 'mongoose';
+
 import { contactMessages as messages } from './messages.js';
 
 export const createContactSchema = Joi.object({
