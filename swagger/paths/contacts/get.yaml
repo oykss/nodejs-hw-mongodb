@@ -84,7 +84,7 @@ responses:
                   example: 20
                 totalPages:
                   type: number
-                  example: 2
+                  example: 1
                 hasNextPage:
                   type: boolean
                   example: true

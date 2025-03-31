@@ -44,7 +44,7 @@ requestBody:
             example: 'https://res.cloudinary.com/dz7onxpzw/image/upload/v1709758144/contacts/default_contact_photo.jpg'
 responses:
   '201':
-    description: Successfully created a contact!
+    description: Successfully created a contact
     content:
       application/json:
         schema:

@@ -44,7 +44,7 @@ requestBody:
             format: binary
 responses:
   '200':
-    description: 'Successfully patched a contact!'
+    description: 'Successfully patched a contact'
     content:
       application/json:
         schema:
