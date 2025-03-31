@@ -1,3 +1,5 @@
+import createHttpError from 'http-errors';
+
 import {
   loginOrSignupWithGoogle,
   loginUser,
@@ -36,7 +38,11 @@ export const loginUserController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) await logoutUser(req.cookies.sessionId);
+  const { sessionId } = req.cookies;
+
+  if (!sessionId) throw createHttpError(401, 'Session not found');
+
+  await logoutUser(req.cookies.sessionId);
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
@@ -63,8 +69,8 @@ export const requestResetEmailController = async (req, res) => {
   await requestResetToken(req.body.email);
 
   res.json({
-    message: 'Reset password email was successfully sent!',
     status: 200,
+    message: 'Reset password email was successfully sent!',
     data: {},
   });
 };
