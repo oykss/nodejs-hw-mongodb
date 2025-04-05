@@ -44,11 +44,19 @@
         "parameters": [
           {
             "in": "query",
+            "name": "query",
+            "schema": {
+              "type": "string",
+              "example": "Test"
+            }
+          },
+          {
+            "in": "query",
             "name": "page",
             "schema": {
-              "type": "integer"
-            },
-            "example": 1
+              "type": "integer",
+              "example": 1
+            }
           },
           {
             "in": "query",
@@ -126,7 +134,7 @@
                     "data": {
                       "type": "object",
                       "required": [
-                        "data",
+                        "contacts",
                         "page",
                         "perPage",
                         "totalItems",
@@ -135,7 +143,7 @@
                         "hasPreviousPage"
                       ],
                       "properties": {
-                        "data": {
+                        "contacts": {
                           "type": "array",
                           "items": {
                             "$ref": "#/components/schemas/contact"

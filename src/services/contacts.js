@@ -17,12 +17,22 @@ export const getAllContacts = async ({
 
   const contactsQuery = ContactsCollection.find({ userId });
 
-  const contactsCount = await ContactsCollection.countDocuments(contactsQuery);
+  if (filter.query) {
+    contactsQuery.where({
+      $or: [
+        { name: { $regex: filter.query, $options: 'i' } },
+        { email: { $regex: filter.query, $options: 'i' } },
+      ],
+    });
+  }
 
   if (filter.type) contactsQuery.where('contactType').eq(filter.type);
 
   if (filter.isFavourite)
     contactsQuery.where('isFavourite').eq(filter.isFavourite);
+
+  const contactsCount = await ContactsCollection.countDocuments(contactsQuery);
+  const paginationData = calculatePaginationData(contactsCount, perPage, page);
 
   const contacts = await contactsQuery
     .skip(skip)
@@ -30,10 +40,8 @@ export const getAllContacts = async ({
     .sort({ [sortBy]: sortOrder })
     .exec();
 
-  const paginationData = calculatePaginationData(contactsCount, perPage, page);
-
   return {
-    data: contacts,
+    contacts: contacts,
     ...paginationData,
   };
 };

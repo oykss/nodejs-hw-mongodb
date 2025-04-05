@@ -8,11 +8,12 @@ const parseIsFavourite = isFavourite =>
     ? isFavourite
     : null;
 
-export const parseFilterParams = query => {
-  const { type, isFavourite } = query;
+export const parseFilterParams = queryParams => {
+  const { type, isFavourite, query } = queryParams;
 
   return {
     type: parseContactType(type),
     isFavourite: parseIsFavourite(isFavourite),
+    query: query ? query.toString() : null,
   };
 };
